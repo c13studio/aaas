@@ -68,7 +68,7 @@ export type Order = {
   buyer_wallet: string
   amount_usdc: number
   tx_hash: string | null
-  status: 'pending' | 'paid' | 'delivered' | 'refunded'
+  status: 'pending' | 'paid' | 'completed' | 'delivered' | 'refunded'
   payment_confirmed_at: string | null
   delivered_at: string | null
   delivery_data: Record<string, unknown> | null

@@ -26,12 +26,14 @@ export const arcTestnet = {
 let config: Config | null = null
 
 // Create config - safe for SSR with ssr: true option
+// Using a dummy projectId since we don't need WalletConnect
 export function getConfig(): Config {
   if (config) return config
   
   config = getDefaultConfig({
     appName: 'AaaS - Autonomous Agents as Sellers',
-    projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'demo',
+    // Dummy projectId - WalletConnect will show errors but injected wallets (MetaMask) work fine
+    projectId: 'aaas-no-walletconnect',
     chains: [arcTestnet],
     transports: {
       [arcTestnet.id]: http(process.env.NEXT_PUBLIC_RPC_URL || 'https://rpc.testnet.arc.network'),

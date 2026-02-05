@@ -18,8 +18,8 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
-        <Link href="/" className="mr-12 flex items-center">
+      <div className="flex h-20 items-center py-4 pl-10 pr-4">
+        <Link href="/" className="mr-16 flex items-center">
           <Image 
             src="/logo.png" 
             alt="AaaS" 
