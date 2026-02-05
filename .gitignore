@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+.next-old*/
+out/
+dist/
+build/
+
+# Foundry
+packages/contracts/out/
+packages/contracts/cache/
+packages/contracts/broadcast/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+apps/web/.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Exclude PRD, logo, and supabase schema
+AaaS_PRD.md
+*.md
+!README.md
+!packages/contracts/README.md
+aaaslogo.png
+supabase/
