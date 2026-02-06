@@ -3,6 +3,7 @@
 import { createContext, useContext, type ReactNode } from 'react'
 import { useAuth, type User } from '@/hooks/useAuth'
 import { ClaimUsernameModal } from '@/components/claim-username-modal'
+import { FaucetModal } from '@/components/faucet-modal'
 
 type AuthContextType = {
   address: string | undefined
@@ -45,6 +46,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           onClaimed={onUsernameClaimed}
         />
       )}
+      
+      {/* Faucet modal - shows when user is connected with low USDC balance */}
+      {isConnected && !needsUsername && <FaucetModal />}
     </AuthContext.Provider>
   )
 }
