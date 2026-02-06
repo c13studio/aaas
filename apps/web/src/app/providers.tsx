@@ -2,7 +2,7 @@
 
 import '@rainbow-me/rainbowkit/styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { WagmiProvider } from 'wagmi'
+import { WagmiProvider, type Config } from 'wagmi'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { getConfig, arcTestnet } from '@/lib/wagmi'
 import { useState, useEffect, createContext, useContext, type ReactNode, useRef } from 'react'
@@ -14,7 +14,7 @@ import { AuthProvider } from '@/components/auth-provider'
 const MountedContext = createContext(false)
 export const useMounted = () => useContext(MountedContext)
 
-// Create QueryClient once
+// Create QueryClient once - safe for SSR
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -27,17 +27,33 @@ const queryClient = new QueryClient({
 
 export function Providers({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false)
-  const configRef = useRef(getConfig())
-  const config = configRef.current
-
+  const configRef = useRef<Config | null>(null)
+  
+  // Only initialize wagmi config on client side to avoid indexedDB issues
   useEffect(() => {
+    if (!configRef.current) {
+      configRef.current = getConfig()
+    }
     setMounted(true)
-    reconnect(config)
-  }, [config])
+    if (configRef.current) {
+      reconnect(configRef.current)
+    }
+  }, [])
+
+  // Show loading state during SSR and initial client render
+  if (!mounted || !configRef.current) {
+    return (
+      <MountedContext.Provider value={false}>
+        <TooltipProvider>
+          {children}
+        </TooltipProvider>
+      </MountedContext.Provider>
+    )
+  }
 
   return (
     <MountedContext.Provider value={mounted}>
-      <WagmiProvider config={config}>
+      <WagmiProvider config={configRef.current}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider
             initialChain={arcTestnet}
