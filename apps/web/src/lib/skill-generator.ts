@@ -1,6 +1,6 @@
 import type { Product } from './supabase'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bejewelled-fenglisu-6b58d2.netlify.app'
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_AAAS_CONTRACT_ADDRESS || '0x448D913F861E574872dE20af60190aCfA201d5E3'
 const CHAIN_ID = 5042002
 
