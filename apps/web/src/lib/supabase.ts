@@ -1,25 +1,19 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+// Get environment variables with fallbacks
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-// Create a lazy-initialized Supabase client
-let _supabase: SupabaseClient | null = null
-
-function getSupabaseClient(): SupabaseClient {
-  if (!_supabase) {
-    if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('placeholder')) {
-      console.warn('Supabase not configured. Please update .env.local with your Supabase credentials.')
-      // Return a mock client that throws helpful errors
-      _supabase = createClient('https://placeholder.supabase.co', 'placeholder')
-    } else {
-      _supabase = createClient(supabaseUrl, supabaseAnonKey)
-    }
-  }
-  return _supabase
+// Validate environment variables
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Missing Supabase environment variables. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY')
 }
 
-export const supabase = getSupabaseClient()
+// Create Supabase client
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key'
+)
 
 // Database Types
 export type Category = {
