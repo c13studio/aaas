@@ -85,7 +85,7 @@ AAAS/
 The `AaaSPaymentLink` contract handles:
 
 - **createPaymentLink** - Seller registers a product with USDC price
-- **payLink** - Buyer pays, USDC transfers to seller (minus 2.5% fee)
+- **payLink** - Buyer pays, USDC transfers to seller (minus 1% fee)
 - **toggleLink** - Seller can activate/deactivate their link
 
 ```solidity
